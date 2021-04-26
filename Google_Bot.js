@@ -1,3 +1,15 @@
+// ==UserScript==
+// @name         Bot for Google
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  My first bot
+// @author       Me
+// @match        https://www.google.com/*
+// @icon         
+// @grant        none
+// ==/UserScript==
+
+
 let keywords =["вывод произвольных полей wordpress", "10 самых популярных шрифтов от Google", "Отключение редакций и ревизий в WordPress"];
 //document.getElementsByName('q')[0].value="10 самых популярных шрифтов от Google";
 let btnK = document.getElementsByName('btnK')[0];
