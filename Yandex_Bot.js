@@ -6,12 +6,27 @@
 // @author       You
 // @match        https://yandex.ru/*
 // @match        https://napli.ru/*
+// @match        https://docdoc.ru/*
 // @icon         
 // @grant        none
 // ==/UserScript==
 
 //let keywords =["гобой", "саксофон", "как звучит флейта"];
-let keywords = ["вывод произвольных типов записей и полей в wordpress", "pods wordpress", "10 самых популярных шрифтов от Google", "Отключение редакций и ревизий в WordPress"];
+//let keywords = ["вывод произвольных типов записей и полей в wordpress", "pods wordpress", "10 самых популярных шрифтов от Google", "Отключение редакций и ревизий в WordPress"];
+
+
+let sites = {
+	"napli.ru":["10 самых популярных шрифтов от Google",
+				"Отключение редакций и ревизий в WordPress",
+				"Вывод произвольных типов записей и полей в WordPress"],
+	"docdoc.ru":["Ковальчук Юлия Вячеславовна",
+				"СберЗдоровье",
+				"сервис по поиску врачей"]
+};
+
+let site = Object.keys(sites)[getRandom(0, Object.keys(sites).length)];
+
+let keywords = sites[site];
 
 
 let btn = document.getElementsByClassName('button mini-suggest__button')[0];
@@ -22,6 +37,21 @@ let i = 0;
 
 
 if (btn !== undefined){
+	document.cookie = `site=${site}`;
+
+}else if (location.hostname == "yandex.ru"){
+	site = getCookie("site");
+}else {
+	site = location.hostname;
+}
+
+
+
+
+
+if (btn !== undefined){
+	document.cookie = `site=${site}`;
+
 	let timerId = setInterval(()=> {
 		yandexInput.value += keyword[i];
 		i++;
@@ -31,17 +61,17 @@ if (btn !== undefined){
 		}
 	}, 100);
 
-}else if(location.hostname == "napli.ru" ) {
+}else if(location.hostname == site ) {
 	console.log("Мы на napli.ru");
 	setTimeout(()=>{
-		let index = getRandom(0,links.length);
 
+		let index = getRandom(0,links.length);
 		if(getRandom(0,101)>=70) {
 			location.href = "https://yandex.ru/";
 		}
-		if(links[index].href.indexOf('napli.ru')!=-1)
+		if(links[index].href.indexOf(site)!=-1)
 			links[index].click();
-	},getRandom(2000,3500));
+	},getRandom(1500,3500));
 }
 else{
 
@@ -49,8 +79,8 @@ else{
 
 	let nextYandexPage = true;
 	for(let i=0; i<links.length; i++) {
-		//if(links[i].href.indexOf('xn----7sbab5aqcbiddtdj1e1g.xn--p1ai')!=-1) {
-		if(links[i].href.indexOf('napli.ru')!=-1) {
+
+		if(links[i].href.indexOf(site)!=-1) {
 			let link = links[i];
 			nextYandexPage = false;
 			console.log("Нашел фразу" + link);
@@ -72,7 +102,7 @@ else{
 	if(document.querySelector('.pager__item_current_yes').textContent !== "5") {
 		setTimeout(()=>{
 			document.getElementsByClassName('pager__item_kind_next')[0].click();}
-			,getRandom(4000,6000));
+				   ,getRandom(4000,6000));
 	}
 }
 
@@ -84,3 +114,15 @@ function getRandom(min,max){
 	return Math.floor(Math.random()*(max-min)+min);
 
 }
+
+function getCookie(name) {
+	let matches = document.cookie.match(new RegExp(
+		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+	));
+	return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+
+
+
+
