@@ -68,7 +68,11 @@ if (btn !== undefined){
 		let index = getRandom(0,links.length);
 		if(getRandom(0,101)>=70) {
 			location.href = "https://yandex.ru/";
+		}else{
+			location.href = "https://www.google.com/";
 		}
+
+
 		if(links[index].href.indexOf(site)!=-1)
 			links[index].click();
 	},getRandom(1500,3500));
@@ -121,8 +125,3 @@ function getCookie(name) {
 	));
 	return matches ? decodeURIComponent(matches[1]) : undefined;
 }
-
-
-
-
-
