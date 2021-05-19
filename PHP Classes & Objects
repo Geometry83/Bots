@@ -94,8 +94,8 @@ class Person {
 
 }
 
-$viktor = new Person("Виктор","Андреев",64);
-$anna = new Person("Анна","Андреева",56);
+$viktor = new Person("Виктор","Иванов",64);
+$anna = new Person("Анна","Иванова",56);
 
 $igor = new Person("Игорь","Петров",68);
 $nina = new Person("Нина","Петрова",60);
